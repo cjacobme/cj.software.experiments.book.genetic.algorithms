@@ -74,4 +74,18 @@ public class PopulationService
 		population.setPopulationFitness(result);
 		return result;
 	}
+
+	public boolean isTerminationConditionMet(Population population)
+	{
+		boolean result = false;
+		for (Individual individual : population.getIndividuals())
+		{
+			if (individual.getFitness() >= 1.0)
+			{
+				result = true;
+				break;
+			}
+		}
+		return result;
+	}
 }
