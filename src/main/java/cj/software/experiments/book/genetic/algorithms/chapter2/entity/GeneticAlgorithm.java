@@ -2,6 +2,8 @@ package cj.software.experiments.book.genetic.algorithms.chapter2.entity;
 
 import java.io.Serializable;
 
+import cj.software.experiments.book.genetic.algorithms.chapter2.impl.PopulationService;
+
 public class GeneticAlgorithm
 		implements
 		Serializable
@@ -49,4 +51,11 @@ public class GeneticAlgorithm
 		return this.elitismCount;
 	}
 
+	// TODO this is service implementation in an entity and should be moved to a service class
+	public Population initPopulation(int chromosomeLength)
+	{
+		PopulationService populationService = new PopulationService();
+		Population population = populationService.create(this.populationSize, chromosomeLength);
+		return population;
+	}
 }
