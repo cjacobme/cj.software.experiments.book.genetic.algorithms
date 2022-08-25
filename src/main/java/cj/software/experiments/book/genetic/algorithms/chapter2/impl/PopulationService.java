@@ -11,7 +11,7 @@ import cj.software.experiments.book.genetic.algorithms.chapter2.entity.Populatio
 
 public class PopulationService
 {
-	private IndividualService individualGenerator = new IndividualService();
+	private IndividualService individualService = new IndividualService();
 
 	private Random random = new Random();
 
@@ -27,7 +27,7 @@ public class PopulationService
 		Individual[] individuals = new Individual[populationSize];
 		for (int index = 0; index < populationSize; index++)
 		{
-			individuals[index] = this.individualGenerator.create(chromosomeLength);
+			individuals[index] = this.individualService.create(chromosomeLength);
 		}
 		Population result = new Population(individuals);
 		return result;
@@ -62,5 +62,16 @@ public class PopulationService
 			individuals[index] = individuals[i];
 			individuals[i] = toBeSwapped;
 		}
+	}
+
+	public double calcPopulationFitness(Population population)
+	{
+		double result = 0.0;
+		for (Individual individual : population.getIndividuals())
+		{
+			result += this.individualService.calcFitness(individual);
+		}
+		population.setPopulationFitness(result);
+		return result;
 	}
 }

@@ -21,4 +21,23 @@ public class IndividualService
 		Individual result = new Individual(chromosomes);
 		return result;
 	}
+
+	public double calcFitness(Individual individual)
+	{
+		int numCorrectGenes = 0;
+		int[] chromosomes = individual.getChromosome();
+		for (int index = 0; index < chromosomes.length; index++)
+		{
+			if (chromosomes[index] == 1)
+			{
+				numCorrectGenes++;
+			}
+		}
+
+		double fitness = (double) numCorrectGenes / chromosomes.length;
+
+		individual.setFitness(fitness);
+
+		return fitness;
+	}
 }
