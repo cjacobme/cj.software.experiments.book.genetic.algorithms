@@ -2,7 +2,7 @@ package cj.software.experiments.book.genetic.algorithms.chapter2.impl;
 
 import cj.software.experiments.book.genetic.algorithms.chapter2.entity.Individual;
 
-public class IndividualGenerator
+public class IndividualService
 {
 	public Individual create(int chromosomeLength)
 	{

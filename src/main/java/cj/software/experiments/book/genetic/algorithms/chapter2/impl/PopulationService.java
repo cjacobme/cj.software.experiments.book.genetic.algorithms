@@ -11,7 +11,7 @@ import cj.software.experiments.book.genetic.algorithms.chapter2.entity.Populatio
 
 public class PopulationService
 {
-	private IndividualGenerator individualGenerator = new IndividualGenerator();
+	private IndividualService individualGenerator = new IndividualService();
 
 	private Random random = new Random();
 
