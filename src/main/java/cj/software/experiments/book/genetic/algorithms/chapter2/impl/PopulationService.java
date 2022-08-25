@@ -2,6 +2,7 @@ package cj.software.experiments.book.genetic.algorithms.chapter2.impl;
 
 import java.util.Arrays;
 import java.util.Comparator;
+import java.util.Random;
 
 import org.apache.commons.lang3.builder.CompareToBuilder;
 
@@ -11,6 +12,8 @@ import cj.software.experiments.book.genetic.algorithms.chapter2.entity.Populatio
 public class PopulationService
 {
 	private IndividualGenerator individualGenerator = new IndividualGenerator();
+
+	private Random random = new Random();
 
 	public Population create(int populationSize)
 	{
@@ -47,5 +50,17 @@ public class PopulationService
 			}
 		});
 		return individuals[index];
+	}
+
+	public void shuffle(Population population)
+	{
+		Individual[] individuals = population.getIndividuals();
+		for (int i = 0; i < individuals.length - 1; i++)
+		{
+			int index = this.random.nextInt(i + 1);
+			Individual toBeSwapped = individuals[index];
+			individuals[index] = individuals[i];
+			individuals[i] = toBeSwapped;
+		}
 	}
 }
