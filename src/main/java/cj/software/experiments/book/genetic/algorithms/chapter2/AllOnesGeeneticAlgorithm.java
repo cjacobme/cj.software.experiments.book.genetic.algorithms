@@ -13,11 +13,13 @@ public class AllOnesGeeneticAlgorithm
 
 		double crossOverRate = 0.95;
 
-		int elitismCount = 0;
+		int elitismCount = 5;
+
+		double mutationRate = 0.01;
 
 		GeneticAlgorithm geneticAlgorithm = new GeneticAlgorithm(
 				100,
-				0.01,
+				mutationRate,
 				crossOverRate,
 				elitismCount);
 
@@ -36,7 +38,8 @@ public class AllOnesGeeneticAlgorithm
 			// apply crossover
 			population = populationService.crossOver(population, crossOverRate, elitismCount);
 
-			// TODO apply mutation
+			// apply mutation
+			population = populationService.mutate(population, elitismCount, mutationRate);
 
 			// evaluate population
 			populationService.calcPopulationFitness(population);

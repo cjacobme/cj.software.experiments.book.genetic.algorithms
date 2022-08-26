@@ -144,4 +144,29 @@ public class PopulationService
 		}
 		return result;
 	}
+
+	public Population mutate(Population source, int elitismCount, double mutationRate)
+	{
+		int numIndividuals = source.size();
+		Population result = create(numIndividuals);
+		for (int populationIndex = 0; populationIndex < elitismCount; populationIndex++)
+		{
+			result.setIndividual(populationIndex, source.getIndividual(populationIndex));
+		}
+		for (int populationIndex = elitismCount; populationIndex < numIndividuals; populationIndex++)
+		{
+			Individual individual = getFittest(source, populationIndex);
+			int geneLength = individual.getChromosomeLength();
+			for (int geneIndex = 0; geneIndex < geneLength; geneIndex++)
+			{
+				if (mutationRate > Math.random())
+				{
+					int newGene = 1 - individual.getGene(geneIndex);
+					individual.setGene(geneIndex, newGene);
+				}
+			}
+			result.setIndividual(populationIndex, individual);
+		}
+		return result;
+	}
 }
