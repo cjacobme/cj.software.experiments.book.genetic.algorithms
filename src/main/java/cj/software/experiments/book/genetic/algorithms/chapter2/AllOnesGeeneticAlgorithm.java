@@ -11,7 +11,15 @@ public class AllOnesGeeneticAlgorithm
 	{
 		PopulationService populationService = new PopulationService();
 
-		GeneticAlgorithm geneticAlgorithm = new GeneticAlgorithm(100, 0.01, 0.95, 0);
+		double crossOverRate = 0.95;
+
+		int elitismCount = 0;
+
+		GeneticAlgorithm geneticAlgorithm = new GeneticAlgorithm(
+				100,
+				0.01,
+				crossOverRate,
+				elitismCount);
 
 		Population population = geneticAlgorithm.initPopulation(50);
 
@@ -25,12 +33,15 @@ public class AllOnesGeeneticAlgorithm
 			// TODO use logger
 			System.out.println(String.format("Best solution[%2d]: %s", generation, fittest));
 
-			// TODO apply crossover
+			// apply crossover
+			population = populationService.crossOver(population, crossOverRate, elitismCount);
 
 			// TODO apply mutation
 
 			// evaluate population
 			populationService.calcPopulationFitness(population);
+
+			generation++;
 		}
 
 		System.out.println("Found solution after " + generation + " cycles");

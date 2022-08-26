@@ -111,4 +111,37 @@ public class PopulationService
 		}
 		return result;
 	}
+
+	public Population crossOver(Population source, double crossOverRate, int elitismCount)
+	{
+		int numPopulations = source.size();
+		Population result = create(numPopulations);
+		for (int populationIndex = 0; populationIndex < numPopulations; populationIndex++)
+		{
+			Individual parent1 = getFittest(source, populationIndex);
+			if (crossOverRate > Math.random() && populationIndex > elitismCount)
+			{
+				int geneLength = parent1.getChromosomeLength();
+				Individual offspring = this.individualService.create(geneLength);
+				Individual parent2 = selectParent(source);
+				for (int geneIndex = 0; geneIndex < geneLength; geneIndex++)
+				{
+					if (0.5 > Math.random())
+					{
+						offspring.setGene(geneIndex, parent1.getGene(geneIndex));
+					}
+					else
+					{
+						offspring.setGene(geneIndex, parent2.getGene(geneIndex));
+					}
+				}
+				result.setIndividual(populationIndex, offspring);
+			}
+			else
+			{
+				result.setIndividual(populationIndex, parent1);
+			}
+		}
+		return result;
+	}
 }
