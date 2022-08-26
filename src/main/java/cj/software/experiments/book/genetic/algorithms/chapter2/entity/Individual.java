@@ -58,7 +58,9 @@ public class Individual
 		{
 			sb.append(gene);
 		}
-		ToStringBuilder builder = new ToStringBuilder(this, ToStringStyle.SIMPLE_STYLE).append(sb);
+		String fitnessFormatted = String.format("%6.3f", this.fitness);
+		ToStringBuilder builder = new ToStringBuilder(this, ToStringStyle.SIMPLE_STYLE).append(sb)
+				.append(fitnessFormatted);
 		String result = builder.build();
 		return result;
 	}
