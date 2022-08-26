@@ -38,13 +38,12 @@ public class PopulationService
 		Individual[] individuals = population.getIndividuals();
 		Arrays.sort(individuals, new Comparator<Individual>()
 		{
-
 			@Override
 			public int compare(Individual individual1, Individual individual2)
 			{
 				CompareToBuilder builder = new CompareToBuilder().append(
-						individual1.getFitness(),
-						individual2.getFitness());
+						individual2.getFitness(),
+						individual1.getFitness());
 				int result = builder.build();
 				return result;
 			}
