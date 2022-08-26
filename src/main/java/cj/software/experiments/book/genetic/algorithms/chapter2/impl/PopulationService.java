@@ -88,4 +88,27 @@ public class PopulationService
 		}
 		return result;
 	}
+
+	public Individual selectParent(Population population)
+	{
+		Individual[] individuals = population.getIndividuals();
+		double populationFitness = population.getPopulationFitness();
+		double rouletteWheelPosition = Math.random() * populationFitness;
+		double spinWheel = 0;
+		Individual result = null;
+		for (Individual individual : individuals)
+		{
+			spinWheel += individual.getFitness();
+			if (spinWheel >= rouletteWheelPosition)
+			{
+				result = individual;
+				break;
+			}
+		}
+		if (result == null)
+		{
+			result = individuals[individuals.length - 1];
+		}
+		return result;
+	}
 }
