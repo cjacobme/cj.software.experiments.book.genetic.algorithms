@@ -17,7 +17,7 @@ public class AllOnesGeeneticAlgorithm
 
 		double crossOverRate = 0.95;
 
-		int elitismCount = 5;
+		int elitismCount = 30;
 
 		double mutationRate = 0.01;
 
