@@ -1,8 +1,8 @@
 package cj.software.experiments.book.genetic.algorithms.chapter2.impl;
 
 import org.assertj.core.api.SoftAssertions;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 
 import cj.software.experiments.book.genetic.algorithms.chapter2.entity.Individual;
 import cj.software.experiments.book.genetic.algorithms.chapter2.entity.Population;
@@ -11,7 +11,7 @@ public class PopulationServiceTest
 {
 	private static PopulationService populationService;;
 
-	@BeforeClass
+	@BeforeAll
 	public static void createService()
 	{
 		populationService = new PopulationService();
