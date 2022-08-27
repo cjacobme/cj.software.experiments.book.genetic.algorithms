@@ -33,7 +33,7 @@ public class PopulationService
 		return result;
 	}
 
-	public Individual getFittest(Population population, int index)
+	public void rate(Population population)
 	{
 		Individual[] individuals = population.getIndividuals();
 		Arrays.sort(individuals, new Comparator<Individual>()
@@ -48,7 +48,6 @@ public class PopulationService
 				return result;
 			}
 		});
-		return individuals[index];
 	}
 
 	public void shuffle(Population population)
@@ -117,7 +116,7 @@ public class PopulationService
 		Population result = create(numPopulations);
 		for (int populationIndex = 0; populationIndex < numPopulations; populationIndex++)
 		{
-			Individual parent1 = getFittest(source, populationIndex);
+			Individual parent1 = source.getIndividual(populationIndex);
 			if (crossOverRate > Math.random() && populationIndex > elitismCount)
 			{
 				int geneLength = parent1.getChromosomeLength();
@@ -154,7 +153,7 @@ public class PopulationService
 		}
 		for (int populationIndex = elitismCount; populationIndex < numIndividuals; populationIndex++)
 		{
-			Individual individual = getFittest(source, populationIndex);
+			Individual individual = source.getIndividual(populationIndex);
 			int geneLength = individual.getChromosomeLength();
 			for (int geneIndex = 0; geneIndex < geneLength; geneIndex++)
 			{

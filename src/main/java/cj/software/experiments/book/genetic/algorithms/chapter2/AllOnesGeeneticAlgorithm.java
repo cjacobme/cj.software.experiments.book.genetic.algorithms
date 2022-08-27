@@ -28,12 +28,14 @@ public class AllOnesGeeneticAlgorithm
 		Population population = populationService.create(populationSize, chromosomeLength);
 
 		populationService.calcPopulationFitness(population);
+		populationService.rate(population);
 
 		int generation = 1;
 
 		while (!populationService.isTerminationConditionMet(population))
 		{
-			Individual fittest = populationService.getFittest(population, 0);
+
+			Individual fittest = population.getIndividual(0);
 			logger.info("Best solution[%2d]: %s", generation, fittest);
 
 			// apply crossover
@@ -44,12 +46,13 @@ public class AllOnesGeeneticAlgorithm
 
 			// evaluate population
 			populationService.calcPopulationFitness(population);
+			populationService.rate(population);
 
 			generation++;
 		}
 
 		logger.info("Found solution after %d cycles", generation);
-		Individual fittest = populationService.getFittest(population, 0);
+		Individual fittest = population.getIndividual(0);
 		logger.info("fittest is %s", fittest);
 	}
 }

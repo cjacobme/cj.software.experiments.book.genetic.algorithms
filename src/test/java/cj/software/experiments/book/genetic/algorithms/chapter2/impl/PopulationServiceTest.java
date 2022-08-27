@@ -37,12 +37,14 @@ public class PopulationServiceTest
 		};
 		Population population = new Population(individuals);
 
-		Individual fit0 = populationService.getFittest(population, 0);
+		populationService.rate(population);
+
+		Individual fit0 = population.getIndividual(0);
 		SoftAssertions softy = new SoftAssertions();
 		softy.assertThat(fit0).as("fit(0)").isSameAs(four);
-		Individual fit1 = populationService.getFittest(population, 1);
+		Individual fit1 = population.getIndividual(1);
 		softy.assertThat(fit1).as("fit(1)").isSameAs(one);
-		Individual fit2 = populationService.getFittest(population, 2);
+		Individual fit2 = population.getIndividual(2);
 		softy.assertThat(fit2).as("fit(2)").isSameAs(zero);
 		softy.assertAll();
 	}
