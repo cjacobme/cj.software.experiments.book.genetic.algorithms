@@ -1,7 +1,6 @@
 package cj.software.experiments.book.genetic.algorithms.chapter2.impl;
 
-import static org.assertj.core.api.Assertions.*;
-
+import org.assertj.core.api.SoftAssertions;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -39,10 +38,12 @@ public class PopulationServiceTest
 		Population population = new Population(individuals);
 
 		Individual fit0 = populationService.getFittest(population, 0);
-		assertThat(fit0).as("fit(0)").isSameAs(four);
+		SoftAssertions softy = new SoftAssertions();
+		softy.assertThat(fit0).as("fit(0)").isSameAs(four);
 		Individual fit1 = populationService.getFittest(population, 1);
-		assertThat(fit1).as("fit(1)").isSameAs(one);
+		softy.assertThat(fit1).as("fit(1)").isSameAs(one);
 		Individual fit2 = populationService.getFittest(population, 2);
-		assertThat(fit2).as("fit(2)").isSameAs(zero);
+		softy.assertThat(fit2).as("fit(2)").isSameAs(zero);
+		softy.assertAll();
 	}
 }
