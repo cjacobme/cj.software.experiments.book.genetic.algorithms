@@ -1,6 +1,5 @@
 package cj.software.experiments.book.genetic.algorithms.chapter2;
 
-import cj.software.experiments.book.genetic.algorithms.chapter2.entity.GeneticAlgorithm;
 import cj.software.experiments.book.genetic.algorithms.chapter2.entity.Individual;
 import cj.software.experiments.book.genetic.algorithms.chapter2.entity.Population;
 import cj.software.experiments.book.genetic.algorithms.chapter2.impl.PopulationService;
@@ -17,13 +16,11 @@ public class AllOnesGeeneticAlgorithm
 
 		double mutationRate = 0.01;
 
-		GeneticAlgorithm geneticAlgorithm = new GeneticAlgorithm(
-				100,
-				mutationRate,
-				crossOverRate,
-				elitismCount);
+		int chromosomeLength = 50;
 
-		Population population = geneticAlgorithm.initPopulation(50);
+		int populationSize = 100;
+
+		Population population = populationService.create(populationSize, chromosomeLength);
 
 		populationService.calcPopulationFitness(population);
 
