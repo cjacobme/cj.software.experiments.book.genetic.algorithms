@@ -1,4 +1,4 @@
-package cj.software.experiments.book.genetic.algorithms.chapter2.entity;
+package cj.software.experiments.book.genetic.algorithms.chapter3.entity;
 
 import java.io.Serializable;
 

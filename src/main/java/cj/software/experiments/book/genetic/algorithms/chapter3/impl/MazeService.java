@@ -1,12 +1,12 @@
-package cj.software.experiments.book.genetic.algorithms.chapter2.impl;
+package cj.software.experiments.book.genetic.algorithms.chapter3.impl;
 
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import cj.software.experiments.book.genetic.algorithms.chapter2.entity.Maze;
-import cj.software.experiments.book.genetic.algorithms.chapter2.entity.MazeField;
-import cj.software.experiments.book.genetic.algorithms.chapter2.entity.Position;
+import cj.software.experiments.book.genetic.algorithms.chapter3.entity.Maze;
+import cj.software.experiments.book.genetic.algorithms.chapter3.entity.MazeField;
+import cj.software.experiments.book.genetic.algorithms.chapter3.entity.Position;
 
 public class MazeService
 {

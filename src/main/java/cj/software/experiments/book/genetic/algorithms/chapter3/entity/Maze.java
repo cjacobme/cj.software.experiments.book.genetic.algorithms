@@ -1,4 +1,4 @@
-package cj.software.experiments.book.genetic.algorithms.chapter2.entity;
+package cj.software.experiments.book.genetic.algorithms.chapter3.entity;
 
 import java.io.Serializable;
 
@@ -25,7 +25,7 @@ public class Maze
 			{
 				for (int colIndex = 0; colIndex < this.maze[rowIndex].length; colIndex++)
 				{
-					if (MazeField.STARTING_POSITION.equals(this.maze[rowIndex][colIndex]))
+					if (MazeField.START.equals(this.maze[rowIndex][colIndex]))
 					{
 						this.startPosition = new Position(colIndex, rowIndex);
 						break;

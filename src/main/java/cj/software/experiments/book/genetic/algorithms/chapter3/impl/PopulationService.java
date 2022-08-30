@@ -6,8 +6,8 @@ import java.util.Random;
 
 import org.apache.commons.lang3.builder.CompareToBuilder;
 
-import cj.software.experiments.book.genetic.algorithms.chapter2.entity.Individual;
-import cj.software.experiments.book.genetic.algorithms.chapter2.entity.Population;
+import cj.software.experiments.book.genetic.algorithms.chapter3.entity.Individual;
+import cj.software.experiments.book.genetic.algorithms.chapter3.entity.Population;
 
 public class PopulationService
 {
