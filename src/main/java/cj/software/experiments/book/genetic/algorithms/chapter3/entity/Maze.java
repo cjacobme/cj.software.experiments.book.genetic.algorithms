@@ -44,6 +44,12 @@ public class Maze
 	{
 		int x = position.getX();
 		int y = position.getY();
+		MazeField result = getPositionValue(x, y);
+		return result;
+	}
+
+	public MazeField getPositionValue(int x, int y)
+	{
 		MazeField result;
 		if (x < 0 || y < 0 || x >= this.maze.length || y >= this.maze[0].length)
 		{
