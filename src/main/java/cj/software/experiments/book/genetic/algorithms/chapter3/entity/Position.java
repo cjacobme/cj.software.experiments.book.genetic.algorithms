@@ -30,6 +30,26 @@ public class Position
 		return this.y;
 	}
 
+	public void decrX()
+	{
+		this.x = Math.max(this.x - 1, 0);
+	}
+
+	public void decrY()
+	{
+		this.y = Math.max(this.y - 1, 0);
+	}
+
+	public void incrX(int max)
+	{
+		this.x = Math.min(this.x + 1, max);
+	}
+
+	public void incrY(int max)
+	{
+		this.y = Math.min(this.y + 1, max);
+	}
+
 	@Override
 	public int hashCode()
 	{

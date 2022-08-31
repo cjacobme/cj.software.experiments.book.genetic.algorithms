@@ -71,4 +71,9 @@ public class Maze
 	{
 		return this.maze.length;
 	}
+
+	public boolean isWall(int x, int y)
+	{
+		return MazeField.WALL.equals(getPositionValue(x, y));
+	}
 }

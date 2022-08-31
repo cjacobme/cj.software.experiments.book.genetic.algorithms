@@ -1,6 +1,6 @@
 package cj.software.experiments.book.genetic.algorithms.chapter3.entity;
 
-import static cj.software.experiments.book.genetic.algorithms.chapter3.entity.MazeField.*;
+import static cj.software.experiments.book.genetic.algorithms.chapter3.entity.Direction.*;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -36,6 +36,27 @@ public class Robot
 		this.route.add(startPosition);
 	}
 
+	public void run()
+	{
+		while (true)
+		{
+			this.moves++;
+			if (this.getNextAction() == 0)
+			{
+				break;
+			}
+			if (MazeField.GOAL.equals(this.maze.getPositionValue(this.position)))
+			{
+				break;
+			}
+			if (this.moves > this.maxMoves)
+			{
+				break;
+			}
+			this.executeNextAction();
+		}
+	}
+
 	// TODO in service class auslagern
 	private int[] calcSensorActions(int[] source)
 	{
@@ -69,30 +90,41 @@ public class Robot
 		{
 			return this.sensorValue;
 		}
+
 		boolean frontSensor, frontLeftSensor, frontRightSensor, leftSensor, rightSensor, backSensor;
 		switch (this.heading)
 		{
 		case NORTH:
-			frontSensor = WALL.equals(
-					this.maze.getPositionValue(this.position.getX(), this.position.getY() - 1));
-			frontLeftSensor = WALL.equals(
-					this.maze.getPositionValue(this.position.getX() - 1, this.position.getY() - 1));
-			frontRightSensor = WALL.equals(
-					this.maze.getPositionValue(this.position.getX() + 1, this.position.getY() - 1));
-			leftSensor = WALL.equals(
-					this.maze.getPositionValue(this.position.getX() - 1, this.position.getY()));
-			rightSensor = WALL.equals(
-					this.maze.getPositionValue(this.position.getX() + 1, this.position.getY()));
-			backSensor = WALL.equals(
-					this.maze.getPositionValue(this.position.getX(), this.position.getY() + 1));
+			frontSensor = this.maze.isWall(this.position.getX(), this.position.getY() - 1);
+			frontLeftSensor = this.maze.isWall(this.position.getX() - 1, this.position.getY() - 1);
+			frontRightSensor = this.maze.isWall(this.position.getX() + 1, this.position.getY() - 1);
+			leftSensor = this.maze.isWall(this.position.getX() - 1, this.position.getY());
+			rightSensor = this.maze.isWall(this.position.getX() + 1, this.position.getY());
+			backSensor = this.maze.isWall(this.position.getX(), this.position.getY() + 1);
 			break;
 		case EAST:
-			frontSensor = WALL.equals(
-					this.maze.getPositionValue(this.position.getX() + 1, this.position.getY()));
-			frontLeftSensor = WALL.equals(
-					this.maze.getPositionValue(this.position.getX() + 1, this.position.getY() - 1));
-			frontRightSensor = WALL.equals(
-					this.maze.getPositionValue(this.position.getX() + 1, this.position.getY() + 1));
+			frontSensor = this.maze.isWall(this.position.getX() + 1, this.position.getY());
+			frontLeftSensor = this.maze.isWall(this.position.getX() + 1, this.position.getY() - 1);
+			frontRightSensor = this.maze.isWall(this.position.getX() + 1, this.position.getY() + 1);
+			leftSensor = this.maze.isWall(this.position.getX(), this.position.getY() - 1);
+			rightSensor = this.maze.isWall(this.position.getX(), this.position.getY() + 1);
+			backSensor = this.maze.isWall(this.position.getX() - 1, this.position.getY());
+			break;
+		case SOUTH:
+			frontSensor = this.maze.isWall(this.position.getX(), this.position.getY() + 1);
+			frontLeftSensor = this.maze.isWall(this.position.getX() + 1, this.position.getY() + 1);
+			frontRightSensor = this.maze.isWall(this.position.getX() - 1, this.position.getY() + 1);
+			leftSensor = this.maze.isWall(this.position.getX() + 1, this.position.getY());
+			rightSensor = this.maze.isWall(this.position.getX() - 1, this.position.getY());
+			backSensor = this.maze.isWall(this.position.getX(), this.position.getY() - 1);
+			break;
+		case WEST:
+			frontSensor = this.maze.isWall(this.position.getX() - 1, this.position.getY());
+			frontLeftSensor = this.maze.isWall(this.position.getX() - 1, this.position.getY() + 1);
+			frontRightSensor = this.maze.isWall(this.position.getX() - 1, this.position.getY() - 1);
+			leftSensor = this.maze.isWall(this.position.getX(), this.position.getY() + 1);
+			rightSensor = this.maze.isWall(this.position.getX(), this.position.getY() - 1);
+			backSensor = this.maze.isWall(this.position.getX() + 1, this.position.getY());
 			break;
 		default:
 			throw new UnsupportedOperationException("unknown: " + this.heading);
@@ -125,5 +157,91 @@ public class Robot
 		}
 		this.sensorValue = result;
 		return result;
+	}
+
+	public void executeNextAction()
+	{
+		int nextAction = getNextAction();
+		switch (nextAction)
+		{
+		case 1:
+			moveForward();
+			break;
+		case 2:
+			moveClockwise();
+			break;
+		case 3:
+			moveCounterClockwise();
+		}
+	}
+
+	private void moveForward()
+	{
+		int currentX = this.position.getX();
+		int currentY = this.position.getY();
+		switch (this.heading)
+		{
+		case NORTH:
+			this.position.decrY();
+			break;
+		case EAST:
+			this.position.incrX(this.maze.getMaxX());
+			break;
+		case SOUTH:
+			this.position.incrY(this.maze.getMaxY());
+			break;
+		case WEST:
+			this.position.decrX();
+			break;
+		}
+
+		// We can't move here
+		if (this.maze.isWall(this.position.getX(), this.position.getY()))
+		{
+			this.position = new Position(currentX, currentY);
+		}
+		else if (currentX != this.position.getX() || currentY != this.position.getY())
+		{
+			this.route.add(this.position);
+		}
+	}
+
+	private void moveClockwise()
+	{
+		switch (this.heading)
+		{
+		case NORTH:
+			this.heading = EAST;
+			break;
+		case EAST:
+			this.heading = SOUTH;
+			break;
+		case SOUTH:
+			this.heading = WEST;
+			break;
+		case WEST:
+			this.heading = NORTH;
+			break;
+		}
+
+	}
+
+	private void moveCounterClockwise()
+	{
+		switch (this.heading)
+		{
+		case NORTH:
+			this.heading = WEST;
+			break;
+		case WEST:
+			this.heading = SOUTH;
+			break;
+		case SOUTH:
+			this.heading = EAST;
+			break;
+		case EAST:
+			this.heading = NORTH;
+			break;
+		}
 	}
 }
