@@ -59,6 +59,7 @@ public class RobotController
 			// TODO apply cross over
 
 			// TODO apply mutation
+			populationService.mutate(population, eltitismCount, mutationRate);
 
 			// evaluate population
 			populationService.calcPopulationFitness(population, maze);
