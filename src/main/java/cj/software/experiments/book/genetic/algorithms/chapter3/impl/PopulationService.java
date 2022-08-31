@@ -7,6 +7,7 @@ import java.util.Random;
 import org.apache.commons.lang3.builder.CompareToBuilder;
 
 import cj.software.experiments.book.genetic.algorithms.chapter3.entity.Individual;
+import cj.software.experiments.book.genetic.algorithms.chapter3.entity.Maze;
 import cj.software.experiments.book.genetic.algorithms.chapter3.entity.Population;
 
 public class PopulationService
@@ -62,12 +63,12 @@ public class PopulationService
 		}
 	}
 
-	public double calcPopulationFitness(Population population)
+	public double calcPopulationFitness(Population population, Maze maze)
 	{
 		double result = 0.0;
 		for (Individual individual : population.getIndividuals())
 		{
-			result += this.individualService.calcFitness(individual);
+			result += this.individualService.calcFitness(individual, maze);
 		}
 		population.setPopulationFitness(result);
 		return result;
@@ -95,6 +96,12 @@ public class PopulationService
 			}
 			result.setIndividual(populationIndex, individual);
 		}
+		return result;
+	}
+
+	public boolean isTerminationConditionMet(int generationsCount, int maxGenerations)
+	{
+		boolean result = (generationsCount > maxGenerations);
 		return result;
 	}
 }

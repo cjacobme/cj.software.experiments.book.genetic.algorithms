@@ -1,9 +1,13 @@
 package cj.software.experiments.book.genetic.algorithms.chapter3.impl;
 
-import cj.software.experiments.book.genetic.algorithms.chapter2.entity.Individual;
+import cj.software.experiments.book.genetic.algorithms.chapter3.entity.Individual;
+import cj.software.experiments.book.genetic.algorithms.chapter3.entity.Maze;
+import cj.software.experiments.book.genetic.algorithms.chapter3.entity.Robot;
 
 public class IndividualService
 {
+	private MazeService mazeService = new MazeService();
+
 	public Individual create(int chromosomeLength)
 	{
 		int[] chromosomes = new int[chromosomeLength];
@@ -20,5 +24,15 @@ public class IndividualService
 		}
 		Individual result = new Individual(chromosomes);
 		return result;
+	}
+
+	public double calcFitness(Individual individual, Maze maze)
+	{
+		int[] chromosome = individual.getChromosome();
+		Robot robot = new Robot(chromosome, maze, 100);
+		robot.run();
+		int fitness = this.mazeService.scoreRoute(maze, robot.getRoute());
+		individual.setFitness(fitness);
+		return fitness;
 	}
 }

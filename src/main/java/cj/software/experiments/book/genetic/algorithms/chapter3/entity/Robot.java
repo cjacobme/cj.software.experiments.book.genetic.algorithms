@@ -176,6 +176,7 @@ public class Robot
 			this.heading = this.directionService.left(this.heading);
 			break;
 		}
+		this.sensorValue = -1;
 	}
 
 	private void moveForward()
@@ -218,5 +219,10 @@ public class Robot
 			sb.append(position).append(line);
 		}
 		return sb.toString();
+	}
+
+	public List<Position> getRoute()
+	{
+		return this.route;
 	}
 }
