@@ -32,4 +32,14 @@ public class DirectionService
 		result.put(EAST, NORTH);
 		return result;
 	}
+
+	public Direction left(Direction source)
+	{
+		return leftTurns.get(source);
+	}
+
+	public Direction right(Direction source)
+	{
+		return rightTurns.get(source);
+	}
 }

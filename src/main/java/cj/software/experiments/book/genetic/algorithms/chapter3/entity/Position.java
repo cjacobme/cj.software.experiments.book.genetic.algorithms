@@ -4,6 +4,8 @@ import java.io.Serializable;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
 
 public class Position
 		implements
@@ -73,6 +75,16 @@ public class Position
 		{
 			result = false;
 		}
+		return result;
+	}
+
+	@Override
+	public String toString()
+	{
+		ToStringBuilder builder = new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
+				.append(this.x)
+				.append(this.y);
+		String result = builder.build();
 		return result;
 	}
 }

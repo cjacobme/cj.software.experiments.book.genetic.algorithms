@@ -1,10 +1,10 @@
 package cj.software.experiments.book.genetic.algorithms.chapter3.entity;
 
-import static cj.software.experiments.book.genetic.algorithms.chapter3.entity.Direction.*;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+
+import cj.software.experiments.book.genetic.algorithms.chapter3.impl.DirectionService;
 
 public class Robot
 		implements
@@ -20,6 +20,8 @@ public class Robot
 	private final int sensorActions[];
 	private Maze maze;
 	private List<Position> route;
+
+	private DirectionService directionService = new DirectionService();
 
 	public Robot(int[] sensorActions, Maze maze, int maxMoves)
 	{
@@ -168,10 +170,11 @@ public class Robot
 			moveForward();
 			break;
 		case 2:
-			moveClockwise();
+			this.heading = this.directionService.right(this.heading);
 			break;
 		case 3:
-			moveCounterClockwise();
+			this.heading = this.directionService.left(this.heading);
+			break;
 		}
 	}
 
@@ -206,42 +209,14 @@ public class Robot
 		}
 	}
 
-	private void moveClockwise()
+	public String describeRoute()
 	{
-		switch (this.heading)
+		String line = String.format("%n");
+		StringBuilder sb = new StringBuilder();
+		for (Position position : this.route)
 		{
-		case NORTH:
-			this.heading = EAST;
-			break;
-		case EAST:
-			this.heading = SOUTH;
-			break;
-		case SOUTH:
-			this.heading = WEST;
-			break;
-		case WEST:
-			this.heading = NORTH;
-			break;
+			sb.append(position).append(line);
 		}
-
-	}
-
-	private void moveCounterClockwise()
-	{
-		switch (this.heading)
-		{
-		case NORTH:
-			this.heading = WEST;
-			break;
-		case WEST:
-			this.heading = SOUTH;
-			break;
-		case SOUTH:
-			this.heading = EAST;
-			break;
-		case EAST:
-			this.heading = NORTH;
-			break;
-		}
+		return sb.toString();
 	}
 }
