@@ -1,7 +1,5 @@
 package cj.software.experiments.book.genetic.algorithms.chapter3;
 
-import static cj.software.experiments.book.genetic.algorithms.chapter3.entity.MazeField.*;
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -17,23 +15,50 @@ public class RobotController
 
 	public static final int MAX_GENERATIONS = 1000;
 
+	private static MazeField[][] toMazeArray(int[][] source)
+	{
+		MazeField[] entries = MazeField.values();
+		int numRows = source.length;
+		MazeField[][] result = new MazeField[numRows][];
+		for (int row = 0; row < numRows; row++)
+		{
+			int numCols = source[row].length;
+			result[row] = new MazeField[numCols];
+			for (int col = 0; col < numCols; col++)
+			{
+				int sourceValue = source[row][col];
+				result[row][col] = entries[sourceValue];
+			}
+		}
+		return result;
+	}
+
 	public static void main(String[] args)
 	{
-		MazeField[][] fields = new MazeField[][]
+		int[][] mazeInts = new int[][]
 		{
-			//@formatter:off
-			{EMPTY, EMPTY, EMPTY, EMPTY, WALL,  EMPTY, WALL,  ROUTE, START},
-			{WALL,  EMPTY, WALL,  WALL,  WALL,  EMPTY, WALL,  ROUTE, WALL},
-			{WALL,  EMPTY, EMPTY, WALL,  ROUTE, ROUTE, ROUTE, ROUTE, WALL},
-			{ROUTE, ROUTE, ROUTE, WALL,  ROUTE, WALL,  WALL,  EMPTY, WALL},
-			{ROUTE, WALL,  ROUTE, ROUTE, ROUTE, WALL,  WALL,  EMPTY, EMPTY},
-			{ROUTE, ROUTE, WALL,  WALL,  WALL,  WALL,  EMPTY, WALL,  WALL},
-			{WALL,  ROUTE, EMPTY, WALL,  ROUTE, ROUTE, ROUTE, ROUTE, ROUTE},
-			{EMPTY, ROUTE, WALL,  WALL,  ROUTE, WALL,  EMPTY, WALL,  ROUTE},
-			{WALL,  ROUTE, ROUTE, ROUTE, ROUTE, WALL,  WALL,  WALL,  GOAL}
-			//@formatter:on
-
+				{ 0, 0, 0, 0, 1, 0, 1, 3, 2
+				},
+				{ 1, 0, 1, 1, 1, 0, 1, 3, 1
+				},
+				{ 1, 0, 0, 1, 3, 3, 3, 3, 1
+				},
+				{ 3, 3, 3, 1, 3, 1, 1, 0, 1
+				},
+				{ 3, 1, 3, 3, 3, 1, 1, 0, 0
+				},
+				{ 3, 3, 1, 1, 1, 1, 0, 1, 1
+				},
+				{ 1, 3, 0, 1, 3, 3, 3, 3, 3
+				},
+				{ 0, 3, 1, 1, 3, 1, 0, 1, 3
+				},
+				{ 1, 3, 3, 3, 3, 1, 1, 1, 4
+				}
 		};
+
+		MazeField[][] fields = toMazeArray(mazeInts);
+
 		Maze maze = new Maze(fields);
 
 		int populationSize = 200;
