@@ -2,9 +2,6 @@ package cj.software.experiments.book.genetic.algorithms.chapter3.entity;
 
 import java.io.Serializable;
 
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
-
 public class Individual
 		implements
 		Serializable
@@ -18,6 +15,22 @@ public class Individual
 	public Individual(int[] chromosome)
 	{
 		this.chromosome = chromosome;
+	}
+
+	public Individual(int chromosomeLength)
+	{
+		this.chromosome = new int[chromosomeLength];
+		for (int gene = 0; gene < chromosomeLength; gene++)
+		{
+			if (0.5 < Math.random())
+			{
+				this.setGene(gene, 1);
+			}
+			else
+			{
+				this.setGene(gene, 0);
+			}
+		}
 	}
 
 	public int[] getChromosome()
@@ -58,10 +71,9 @@ public class Individual
 		{
 			sb.append(gene);
 		}
-		String fitnessFormatted = String.format("%6.3f", this.fitness);
-		ToStringBuilder builder = new ToStringBuilder(this, ToStringStyle.SIMPLE_STYLE).append(sb)
-				.append(fitnessFormatted);
-		String result = builder.build();
+		String fitnessFormatted = String.format("%12.8f", this.fitness);
+		StringBuilder builder = new StringBuilder(fitnessFormatted).append("|").append(sb);
+		String result = builder.toString();
 		return result;
 	}
 }

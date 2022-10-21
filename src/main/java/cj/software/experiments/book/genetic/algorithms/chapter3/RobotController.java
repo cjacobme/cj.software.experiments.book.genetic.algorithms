@@ -64,7 +64,7 @@ public class RobotController
 		int populationSize = 200;
 		double mutationRate = 0.05;
 		double crossOverRate = 0.9;
-		int eltitismCount = 2;
+		int elitismCount = 2;
 		int tournamentSize = 10;
 		int chromosomeLength = 128;
 
@@ -81,10 +81,15 @@ public class RobotController
 			Individual fittest = population.getIndividual(0);
 			logger.info("Best solution[%4d]: %s", generationCounter, fittest);
 
-			// TODO apply cross over
+			// apply cross over
+			population = populationService.crossover(
+					population,
+					crossOverRate,
+					elitismCount,
+					tournamentSize);
 
-			// TODO apply mutation
-			populationService.mutate(population, eltitismCount, mutationRate);
+			// apply mutation
+			populationService.mutate(population, elitismCount, mutationRate);
 
 			// evaluate population
 			populationService.calcPopulationFitness(population, maze);

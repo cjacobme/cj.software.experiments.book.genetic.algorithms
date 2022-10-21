@@ -12,6 +12,7 @@ import cj.software.experiments.book.genetic.algorithms.chapter3.entity.Populatio
 
 public class PopulationService
 {
+
 	private IndividualService individualService = new IndividualService();
 
 	private Random random = new Random();
@@ -78,23 +79,71 @@ public class PopulationService
 	{
 		int numIndividuals = source.size();
 		Population result = create(numIndividuals);
-		for (int populationIndex = 0; populationIndex < elitismCount; populationIndex++)
-		{
-			result.setIndividual(populationIndex, source.getIndividual(populationIndex));
-		}
-		for (int populationIndex = elitismCount; populationIndex < numIndividuals; populationIndex++)
+		for (int populationIndex = 0; populationIndex < numIndividuals; populationIndex++)
 		{
 			Individual individual = source.getIndividual(populationIndex);
-			int geneLength = individual.getChromosomeLength();
-			for (int geneIndex = 0; geneIndex < geneLength; geneIndex++)
+			if (populationIndex >= elitismCount)
 			{
-				if (mutationRate > Math.random())
+				int geneLength = individual.getChromosomeLength();
+				for (int geneIndex = 0; geneIndex < geneLength; geneIndex++)
 				{
-					int newGene = 1 - individual.getGene(geneIndex);
-					individual.setGene(geneIndex, newGene);
+					if (mutationRate > Math.random())
+					{
+						int newGene = 1 - individual.getGene(geneIndex);
+						individual.setGene(geneIndex, newGene);
+					}
 				}
 			}
 			result.setIndividual(populationIndex, individual);
+		}
+		return result;
+	}
+
+	public Individual selectParent(Population population, int tournamentSize)
+	{
+		Population tournament = new Population(tournamentSize);
+		this.shuffle(population);
+		for (int index = 0; index < tournamentSize; index++)
+		{
+			Individual individual = population.getIndividual(index);
+			tournament.setIndividual(index, individual);
+		}
+		rate(tournament);
+		Individual result = tournament.getIndividual(0);
+		return result;
+	}
+
+	public Population crossover(
+			Population source,
+			double crossoverRate,
+			int elitismCount,
+			int tournamentSize)
+	{
+		int numIndividuals = source.size();
+		Population result = new Population(numIndividuals);
+		for (int populationIndex = 0; populationIndex < numIndividuals; populationIndex++)
+		{
+			Individual parent1 = source.getIndividual(populationIndex);
+			if (crossoverRate > Math.random() && populationIndex >= elitismCount)
+			{
+				int numGenes = parent1.getChromosomeLength();
+				Individual offspring = new Individual(numGenes);
+				Individual parent2 = this.selectParent(source, tournamentSize);
+				int swapPoint = (int) (Math.random() * (numGenes + 1));
+				for (int geneIndex = 0; geneIndex < swapPoint; geneIndex++)
+				{
+					offspring.setGene(geneIndex, parent1.getGene(geneIndex));
+				}
+				for (int geneIndex = swapPoint; geneIndex < numGenes; geneIndex++)
+				{
+					offspring.setGene(geneIndex, parent2.getGene(geneIndex));
+				}
+				result.setIndividual(populationIndex, offspring);
+			}
+			else
+			{
+				result.setIndividual(populationIndex, parent1);
+			}
 		}
 		return result;
 	}

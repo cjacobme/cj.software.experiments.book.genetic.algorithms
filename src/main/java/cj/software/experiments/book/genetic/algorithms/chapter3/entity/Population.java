@@ -12,6 +12,11 @@ public class Population
 
 	private double populationFitness = -1;
 
+	public Population(int numIndividuals)
+	{
+		this.individuals = new Individual[numIndividuals];
+	}
+
 	public Population(Individual[] individuals)
 	{
 		this.individuals = individuals;
