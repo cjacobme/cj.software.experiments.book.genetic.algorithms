@@ -82,7 +82,9 @@ public class Robot
 
 	public int getNextAction()
 	{
-		return this.sensorActions[this.getSensorValue()];
+		int sensorValue = this.getSensorValue();
+		int result = this.sensorActions[sensorValue];
+		return result;
 	}
 
 	// TODO in service auslagern
