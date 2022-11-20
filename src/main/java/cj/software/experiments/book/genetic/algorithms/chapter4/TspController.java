@@ -12,6 +12,7 @@ import cj.software.experiments.book.genetic.algorithms.chapter4.entity.CityPair;
 import cj.software.experiments.book.genetic.algorithms.chapter4.entity.Individual;
 import cj.software.experiments.book.genetic.algorithms.chapter4.entity.Population;
 import cj.software.experiments.book.genetic.algorithms.chapter4.util.CityService;
+import cj.software.experiments.book.genetic.algorithms.chapter4.util.PopulationService;
 import cj.software.experiments.book.genetic.algorithms.chapter4.util.Rating;
 
 public class TspController
@@ -26,6 +27,8 @@ public class TspController
 
 	private final Rating rating = new Rating();
 
+	private PopulationService populationService = new PopulationService();
+
 	private final Logger logger = LogManager.getFormatterLogger();
 
 	public static void main(String[] args)
@@ -37,14 +40,14 @@ public class TspController
 	private void runTsp()
 	{
 		List<City> cities = this.cityService.createCities(NUM_CITIES);
-		Population population = new Population(POPULATION_SIZE, NUM_CITIES);
+		Population population = this.populationService.create(POPULATION_SIZE, NUM_CITIES);
 		Map<CityPair, Double> existingDistances = new HashMap<>();
 		this.rating.calcPopulationFitness(population, cities, existingDistances);
 		List<Individual> rated = this.rating.rate(population);
 		for (int generation = 0; generation < MAX_GENERATIONS; generation++)
 		{
 			Individual best = rated.get(0);
-			this.logger.info("G#%4d best distance=%f %s", generation, best.getDistance(), best);
+			this.logger.info("G#%04d best distance=%8.2f %s", generation, best.getDistance(), best);
 		}
 	}
 }

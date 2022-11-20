@@ -17,13 +17,9 @@ public class Individual
 
 	private double distance;
 
-	public Individual(int chromosomeLength)
+	public Individual(int[] chromosomes)
 	{
-		this.chromosome = new int[chromosomeLength];
-		for (int gene = 0; gene < chromosomeLength; gene++)
-		{
-			this.chromosome[gene] = gene;
-		}
+		this.chromosome = chromosomes;
 	}
 
 	public int[] getChromosome()

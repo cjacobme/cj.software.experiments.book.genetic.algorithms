@@ -12,13 +12,9 @@ public class Population
 
 	private double populationFitness;
 
-	public Population(int populationSize, int chromosomeLength)
+	public Population(Individual[] individuals)
 	{
-		this.individuals = new Individual[populationSize];
-		for (int index = 0; index < populationSize; index++)
-		{
-			this.individuals[index] = new Individual(chromosomeLength);
-		}
+		this.individuals = individuals;
 	}
 
 	public Individual[] getIndividuals()
