@@ -23,6 +23,14 @@ public class TspController
 
 	public static final int MAX_GENERATIONS = 10000;
 
+	public static final int ELITISM_COUNT = 2;
+
+	public static final double CROSSOVER_RATE = 0.9;
+
+	public static final int TOURNAMENT_SIZE = 5;
+
+	public static final double MUTATION_RATE = 0.001;
+
 	private final CityService cityService = new CityService();
 
 	private final Rating rating = new Rating();
@@ -46,12 +54,18 @@ public class TspController
 		List<Individual> rated = this.rating.rate(population);
 		for (int generation = 0; generation < MAX_GENERATIONS; generation++)
 		{
-			Individual best = rated.get(0);
-			this.logger.info("G#%04d best distance=%8.2f %s", generation, best.getDistance(), best);
+			population = this.populationService.crossOver(
+					population,
+					CROSSOVER_RATE,
+					ELITISM_COUNT,
+					TOURNAMENT_SIZE);
 
-			population = this.populationService.crossOver(population, 0.9, 2, 5);
+			this.populationService.mutation(population, ELITISM_COUNT, MUTATION_RATE);
+
 			this.rating.calcPopulationFitness(population, cities, existingDistances);
 			rated = this.rating.rate(population);
+			Individual best = rated.get(0);
+			this.logger.info("G#%04d best distance=%8.2f %s", generation, best.getDistance(), best);
 		}
 	}
 }

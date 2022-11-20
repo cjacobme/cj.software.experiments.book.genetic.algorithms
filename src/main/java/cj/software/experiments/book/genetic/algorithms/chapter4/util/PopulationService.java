@@ -112,4 +112,12 @@ public class PopulationService
 		return result;
 	}
 
+	public void mutation(Population source, int elitismCount, double mutationRate)
+	{
+		Individual[] individuals = source.getIndividuals();
+		for (int individual = elitismCount; individual < individuals.length; individual++)
+		{
+			this.individualService.mutate(individuals[individual], mutationRate);
+		}
+	}
 }

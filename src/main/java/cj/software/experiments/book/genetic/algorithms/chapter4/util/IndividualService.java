@@ -28,4 +28,19 @@ public class IndividualService
 		Individual result = new Individual(chromosomes);
 		return result;
 	}
+
+	public void mutate(Individual source, double mutationRate)
+	{
+		int[] chromosomes = source.getChromosome();
+		for (int chromo = 0; chromo < chromosomes.length; chromo++)
+		{
+			if (Math.random() < mutationRate)
+			{
+				int otherIndex = (int) (Math.random() * chromosomes.length);
+				int swap = chromosomes[chromo];
+				chromosomes[chromo] = chromosomes[otherIndex];
+				chromosomes[otherIndex] = swap;
+			}
+		}
+	}
 }
