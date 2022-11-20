@@ -47,6 +47,35 @@ public class Individual
 		this.distance = distance;
 	}
 
+	public int getChromosomeLength()
+	{
+		return this.chromosome.length;
+	}
+
+	public int getGene(int pos)
+	{
+		return this.chromosome[pos];
+	}
+
+	public void setGene(int pos, int value)
+	{
+		this.chromosome[pos] = value;
+	}
+
+	public boolean containsGene(int gene)
+	{
+		boolean result = false;
+		for (int i = 0; i < this.chromosome.length; i++)
+		{
+			if (this.chromosome[i] == gene)
+			{
+				result = true;
+				break;
+			}
+		}
+		return result;
+	}
+
 	@Override
 	public String toString()
 	{

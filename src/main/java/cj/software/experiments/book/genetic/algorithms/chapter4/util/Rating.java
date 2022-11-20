@@ -55,8 +55,8 @@ public class Rating
 			public int compare(Individual individual1, Individual individual2)
 			{
 				CompareToBuilder builder = new CompareToBuilder().append(
-						individual1.getFitnessValue(),
-						individual2.getFitnessValue());
+						individual2.getFitnessValue(),
+						individual1.getFitnessValue());
 				int result = builder.build();
 				return result;
 			}

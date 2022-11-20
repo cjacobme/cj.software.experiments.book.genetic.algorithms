@@ -48,6 +48,10 @@ public class TspController
 		{
 			Individual best = rated.get(0);
 			this.logger.info("G#%04d best distance=%8.2f %s", generation, best.getDistance(), best);
+
+			population = this.populationService.crossOver(population, 0.9, 2, 5);
+			this.rating.calcPopulationFitness(population, cities, existingDistances);
+			rated = this.rating.rate(population);
 		}
 	}
 }

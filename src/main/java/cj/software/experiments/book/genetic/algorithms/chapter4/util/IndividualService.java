@@ -1,8 +1,6 @@
 package cj.software.experiments.book.genetic.algorithms.chapter4.util;
 
-import java.util.HashSet;
 import java.util.Random;
-import java.util.Set;
 
 import cj.software.experiments.book.genetic.algorithms.chapter4.entity.Individual;
 
@@ -12,18 +10,21 @@ public class IndividualService
 
 	public Individual create(int chromosomeLength)
 	{
-		Set<Integer> entries = new HashSet<>(chromosomeLength);
-		for (int index = 0; index < chromosomeLength; index++)
-		{
-			entries.add(index);
-		}
 		int[] chromosomes = new int[chromosomeLength];
 		for (int chromo = 0; chromo < chromosomeLength; chromo++)
 		{
-			int index = this.random.nextInt(entries.size());
-			entries.remove(index);
-			chromosomes[chromo] = index;
+			chromosomes[chromo] = chromo;
 		}
+
+		for (int chromo = 0; chromo < chromosomeLength; chromo++)
+		{
+			int pos1 = this.random.nextInt(chromosomeLength);
+			int pos2 = this.random.nextInt(chromosomeLength);
+			int swap = chromosomes[pos1];
+			chromosomes[pos1] = chromosomes[pos2];
+			chromosomes[pos2] = swap;
+		}
+
 		Individual result = new Individual(chromosomes);
 		return result;
 	}

@@ -19,7 +19,7 @@ public class CityService
 	private Set<City> createCitiesSet(int numCities)
 	{
 		Set<City> result = new HashSet<>();
-		while (result.size() < numCities - 1)
+		while (result.size() < numCities)
 		{
 			int xPos = (int) (100 * Math.random());
 			int yPos = (int) (100 * Math.random());
