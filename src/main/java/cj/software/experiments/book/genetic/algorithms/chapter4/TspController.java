@@ -43,7 +43,8 @@ public class TspController
 		List<Individual> rated = this.rating.rate(population);
 		for (int generation = 0; generation < MAX_GENERATIONS; generation++)
 		{
-			this.logger.info("G#%4d best distance=%f", generation, rated.get(0).getDistance());
+			Individual best = rated.get(0);
+			this.logger.info("G#%4d best distance=%f %s", generation, best.getDistance(), best);
 		}
 	}
 }
